@@ -1,4 +1,4 @@
-# masterproef
+# Masterproef
 Rendering light field images on mobile devices
 
 ## Getting Started
