@@ -1,6 +1,6 @@
 # CMake entry point
 cmake_minimum_required (VERSION 3.0)
-project (ShadertoyProject)
+project (OpenGL_Project)
 
 find_package(OpenGL REQUIRED)
 
