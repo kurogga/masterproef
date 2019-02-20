@@ -3,7 +3,7 @@ Rendering light field images on mobile devices
 
 ## Getting Started
 ### Foutenanalyse
-Script neemt telkens een beeld uit orignal-folder en een uit changed-folder.
+Script neemt telkens een beeld uit orignal-folder en een uit changed-folder om te vergelijken. PSNR- en SSIM-waarden worden berekend en op grafiek geplot.
 
 ### OpenGL_Project 
-De folder [OpenGL_Project](https://github.com/kurogga/masterproef/tree/master/OpenGL_Project) compileren met CMake en werkend package bouwen (enkel getest met Visual Studio). Er zijn ook enkele executables beschikbaar in de folder [balls](https://github.com/kurogga/masterproef/tree/master/OpenGL_Project/balls).
+Het project bevat een testprogramma met instancing in OpenGL in c++.
