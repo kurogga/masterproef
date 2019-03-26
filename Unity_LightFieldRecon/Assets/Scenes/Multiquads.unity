@@ -124,7 +124,6 @@ GameObject:
   - component: {fileID: 164482132}
   - component: {fileID: 164482131}
   - component: {fileID: 164482130}
-  - component: {fileID: 164482129}
   m_Layer: 0
   m_Name: Quad (4)
   m_TagString: Untagged
@@ -146,26 +145,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &164482129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 164482127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &164482130
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -237,7 +216,6 @@ GameObject:
   - component: {fileID: 508949664}
   - component: {fileID: 508949663}
   - component: {fileID: 508949662}
-  - component: {fileID: 508949661}
   m_Layer: 0
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -259,26 +237,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &508949661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508949659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &508949662
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -470,7 +428,6 @@ GameObject:
   - component: {fileID: 913707168}
   - component: {fileID: 913707167}
   - component: {fileID: 913707166}
-  - component: {fileID: 913707165}
   m_Layer: 0
   m_Name: Quad (5)
   m_TagString: Untagged
@@ -492,26 +449,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &913707165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913707163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &913707166
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -583,7 +520,6 @@ GameObject:
   - component: {fileID: 931063762}
   - component: {fileID: 931063761}
   - component: {fileID: 931063760}
-  - component: {fileID: 931063759}
   m_Layer: 0
   m_Name: Quad (7)
   m_TagString: Untagged
@@ -605,26 +541,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &931063759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 931063757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &931063760
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -696,7 +612,6 @@ GameObject:
   - component: {fileID: 966646472}
   - component: {fileID: 966646471}
   - component: {fileID: 966646470}
-  - component: {fileID: 966646469}
   m_Layer: 0
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -718,26 +633,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &966646469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 966646467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &966646470
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -809,7 +704,6 @@ GameObject:
   - component: {fileID: 1325922810}
   - component: {fileID: 1325922809}
   - component: {fileID: 1325922808}
-  - component: {fileID: 1325922807}
   m_Layer: 0
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -831,26 +725,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1325922807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325922805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &1325922808
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1035,7 +909,6 @@ GameObject:
   - component: {fileID: 1536658801}
   - component: {fileID: 1536658800}
   - component: {fileID: 1536658799}
-  - component: {fileID: 1536658798}
   m_Layer: 0
   m_Name: Quad (8)
   m_TagString: Untagged
@@ -1057,26 +930,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1536658798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536658796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &1536658799
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1148,7 +1001,6 @@ GameObject:
   - component: {fileID: 1951538851}
   - component: {fileID: 1951538850}
   - component: {fileID: 1951538849}
-  - component: {fileID: 1951538848}
   m_Layer: 0
   m_Name: Quad (6)
   m_TagString: Untagged
@@ -1170,26 +1022,6 @@ Transform:
   m_Father: {fileID: 534669905}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1951538848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951538846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13852c740345974ca14c6fe8520af2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 4b302085cbc15424b958759b0bf4ba6e, type: 3}
-  material: {fileID: 0}
-  mousePosition: {x: 0, y: 0}
-  kernels: 0
-  muXList: []
-  muYnPiList: []
-  coMatrixInvList: []
-  determinantList: []
 --- !u!64 &1951538849
 MeshCollider:
   m_ObjectHideFlags: 0

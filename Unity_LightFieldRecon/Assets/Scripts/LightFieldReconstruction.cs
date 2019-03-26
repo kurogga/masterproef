@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Globalization;
+using UnityEditor;
 
 public class LightFieldReconstruction : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class LightFieldReconstruction : MonoBehaviour
     public Material material;
     public Vector2 mousePosition;
     public int kernels;
+    public List<Vector2> mousePositionList;
+    public float deltaTime;
+    public int frameCount;
+    public const int FRAME_WIDTH = 623;
+    public const int FRAME_HEIGHT = 432;
 
     // Buffer to store data and pass to shader
     public ComputeBuffer muXBuffer;
@@ -23,7 +29,7 @@ public class LightFieldReconstruction : MonoBehaviour
     public List<Vector4> muYnPiList; // color en pi
     public List<Matrix4x4> coMatrixInvList; // -1/2 coMatrix^(-1)
     public List<float> determinantList; // 1/sqrt(determinant(coMatrix))
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,11 +41,23 @@ public class LightFieldReconstruction : MonoBehaviour
         coMatrixInvList = new List<Matrix4x4>();
         determinantList = new List<float>();
         List<string> eachLine = new List<string>();
-        float twoPi = (float) (2 * Mathf.PI);
+        mousePositionList = new List<Vector2>();
+        deltaTime = 0.0f;
+        frameCount = 0;
+        // float twoPi = (float) (2 * Mathf.PI);
+        // 50 difference position of camera for comparisons
+        float step = 1.3f;
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                mousePositionList.Add(new Vector2(i * step, j * step));
+            }
 
+        }
         string theWholeFileAsOneLongString = textFile.text;
         eachLine.AddRange(theWholeFileAsOneLongString.Split("\n"[0]));
-        kernels = eachLine.Count-1;
+        kernels = eachLine.Count - 1;
         for (int i = 0; i < eachLine.Count - 1; i++)
         {
             string[] nrs = eachLine[i].Split(',');
@@ -63,14 +81,13 @@ public class LightFieldReconstruction : MonoBehaviour
             }
 
             // Get and save sqrt(determinant)
-            determinantCM = (float) Mathf.Sqrt(Mathf.Pow(twoPi,4)*coMatrix.determinant);
-            // determinantCM = (float) (Mathf.Pow(twoPi,2)*Mathf.Sqrt(coMatrix.determinant));
-            determinantCM = 1 / determinantCM;
-            // determinantCM = Mathf.Sqrt(coMatrix.determinant);
+            determinantCM = Mathf.Sqrt(coMatrix.determinant);
+            // determinantCM = 1 / determinantCM;
 
             //-1/2 * inv matrix
             Matrix4x4 invMatrix = coMatrix.inverse;
-            for(int j=0; j<16; j++){
+            for (int j = 0; j < 16; j++)
+            {
                 invMatrix[j] *= -0.5f;
             }
 
@@ -100,20 +117,35 @@ public class LightFieldReconstruction : MonoBehaviour
         material.SetBuffer("coMatrixInvList", coMatrixInvBuffer);
         material.SetBuffer("determinantList", determinantBuffer);
         material.SetInt("kernels", kernels);
+        material.SetInt("frameWidth", FRAME_WIDTH);
+        material.SetInt("frameHeight", FRAME_HEIGHT);
         Debug.Log("Finished initialiazing");
     }
 
     // Update is called once per frame
     void Update()
     {
-        mousePosition = new Vector2(Input.mousePosition.x/Screen.width*20,Input.mousePosition.y/Screen.height*20);
-        material.SetFloat("mouseX",mousePosition.x);
-        material.SetFloat("mouseY",mousePosition.y);
-        
-        if(Input.GetKeyDown(KeyCode.Space)){
-
+        // mousePosition = new Vector2(Input.mousePosition.x/Screen.width*20,Input.mousePosition.y/Screen.height*20);
+        // material.SetFloat("mouseX",mousePosition.x);
+        // material.SetFloat("mouseY",mousePosition.y);
+        if (frameCount >= 100)
+        {
+            EditorApplication.isPlaying = false;
         }
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        deltaTime += Time.deltaTime;
+        if (deltaTime > 1.0f)
+        {
+            material.SetFloat("mouseX", mousePositionList[frameCount].x);
+            material.SetFloat("mouseY", mousePositionList[frameCount].y);
+            deltaTime = 0.0f;
+            frameCount++;
+        }
+
+        // if(Input.GetKeyDown(KeyCode.Space)){
+
+        // }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Application.Quit();
         }
     }
@@ -126,5 +158,5 @@ public class LightFieldReconstruction : MonoBehaviour
         coMatrixInvBuffer.Release();
         determinantBuffer.Release();
     }
-    
+
 }

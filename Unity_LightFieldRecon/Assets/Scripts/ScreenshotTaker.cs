@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System;
 using UnityEngine;
 
 public class ScreenshotTaker : MonoBehaviour
@@ -9,6 +10,8 @@ public class ScreenshotTaker : MonoBehaviour
     public int frameCount;
     public float deltaTime;
     public bool first;
+    public const string DIRECTORY = "flowers_800_0p0k/";
+    public string path;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,15 @@ public class ScreenshotTaker : MonoBehaviour
         frameCount = 0;
         deltaTime = 0.0f;
         first = true;
+        path = Application.dataPath + "/../Screenshot/" + DIRECTORY;
+        try
+        {
+            DirectoryInfo di = Directory.CreateDirectory(path);
+        }
+        catch (Exception e)
+        {
+            UnityEngine.Debug.Log(e.ToString());
+        }
     }
 
     // Update is called once per frame
@@ -26,18 +38,20 @@ public class ScreenshotTaker : MonoBehaviour
     void OnPostRender()
     {
         deltaTime += Time.deltaTime;
-        if(deltaTime > 2.0f){
+        if (deltaTime > 1.0f)
+        {
             SaveFrameAsImg();
             deltaTime = 0.0f;
         }
     }
 
-    void SaveFrameAsImg(){
+    void SaveFrameAsImg()
+    {
         // Create a texture the size of the screen, RGB24 format
         int width = Screen.width;
         int height = Screen.height;
         Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
-        
+
         // Read screen contents into the texture
         tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         tex.Apply();
@@ -64,8 +78,9 @@ public class ScreenshotTaker : MonoBehaviour
         //     first = !first;
         // }
         // Write to a file in the project folder
-        File.WriteAllBytes(Application.dataPath + "/../Screenshot/SavedScreen"+frameCount+".png", bytes);
-        UnityEngine.Debug.Log("Saved Screenshot to: "+Application.dataPath + "/../Screenshot/");
+
+        File.WriteAllBytes(path + frameCount + ".png", bytes);
+        UnityEngine.Debug.Log("Saved Screenshot to: " + path);
         frameCount++;
     }
 
@@ -74,9 +89,9 @@ public class ScreenshotTaker : MonoBehaviour
     //     ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", "python "+Application.dataPath+"/../Screenshot/analyse.py");
     //     // processInfo.CreateNoWindow = true;
     //     // processInfo.UseShellExecute = false;
- 
+
     //     Process process = Process.Start(processInfo);
-         
+
     //     // process.WaitForExit();
     //     // process.Close();
     // }
