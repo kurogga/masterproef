@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 
-public class LightFieldMulti : MonoBehaviour
+public class LightFieldMulti2 : MonoBehaviour
 {
     public class Kernel : IComparable<Kernel>
     {
@@ -60,10 +60,6 @@ public class LightFieldMulti : MonoBehaviour
     {
         // Using mahalanobis distance as measure, the closer the better
         // Calculate the average of four anchor points
-        // float minPixelX = (xVector.z - OVERLAPPING_PIXELS) < 0 ? xVector.z : xVector.z - OVERLAPPING_PIXELS;
-        // float maxPixelX = (xVector.z + OVERLAPPING_PIXELS + PIXELS_PER_BLOCK) > FRAME_WIDTH ? xVector.z + (FRAME_WIDTH - xVector.z) : xVector.z + OVERLAPPING_PIXELS + PIXELS_PER_BLOCK;
-        // float minPixelY = (xVector.w - OVERLAPPING_PIXELS) < 0 ? xVector.w : xVector.w - OVERLAPPING_PIXELS;
-        // float maxPixelY = (xVector.w + OVERLAPPING_PIXELS + PIXELS_PER_BLOCK) > FRAME_HEIGHT ? xVector.w + (FRAME_HEIGHT - xVector.w) : xVector.w + OVERLAPPING_PIXELS + PIXELS_PER_BLOCK;
         float midPixelX = (xVector.z + PIXELS_PER_BLOCK / 2) > FRAME_WIDTH ? xVector.z + (FRAME_WIDTH - xVector.z) / 2 : xVector.z + PIXELS_PER_BLOCK / 2;
         float midPixelY = (xVector.w + PIXELS_PER_BLOCK / 2) > FRAME_HEIGHT ? xVector.w + (FRAME_HEIGHT - xVector.w) / 2 : xVector.w + PIXELS_PER_BLOCK / 2;
         float minCam = -50.0f;
@@ -71,43 +67,6 @@ public class LightFieldMulti : MonoBehaviour
         for (int i = 0; i < kernelList.Count; i++)
         {
             kernelList[i].MahaDist = 0.0f;
-
-            // // TESTING WITH VARYING PIXEL VALUES - NOT RECOMMENDED
-            // // Top left anchor point
-            // Vector4 newXVector = new Vector4(xVector.x, xVector.y, minPixelX, minPixelY);
-            // Vector4 x_min_mu = xVector - kernelList[i].MuX;
-            // Vector4 tempVector = kernelList[i].CoMatrixInv * x_min_mu;
-            // float result = Vector4.Dot(x_min_mu, tempVector);
-            // result = Mathf.Sqrt(result);
-            // kernelList[i].MahaDist += result;
-            // // Top right anchor point
-            // newXVector = new Vector4(xVector.x, xVector.y, maxPixelX, minPixelY);
-            // x_min_mu = newXVector - kernelList[i].MuX;
-            // tempVector = kernelList[i].CoMatrixInv * x_min_mu;
-            // result = Vector4.Dot(x_min_mu, tempVector);
-            // result = Mathf.Sqrt(result);
-            // kernelList[i].MahaDist += result;
-            // // Bottom right anchor point
-            // newXVector = new Vector4(xVector.x, xVector.y, maxPixelX, maxPixelY);
-            // x_min_mu = newXVector - kernelList[i].MuX;
-            // tempVector = kernelList[i].CoMatrixInv * x_min_mu;
-            // result = Vector4.Dot(x_min_mu, tempVector);
-            // result = Mathf.Sqrt(result);
-            // kernelList[i].MahaDist += result;
-            // // Bottom left anchor point
-            // newXVector = new Vector4(xVector.x, xVector.y, minPixelX, maxPixelY);
-            // x_min_mu = newXVector - kernelList[i].MuX;
-            // tempVector = kernelList[i].CoMatrixInv * x_min_mu;
-            // result = Vector4.Dot(x_min_mu, tempVector);
-            // result = Mathf.Sqrt(result);
-            // kernelList[i].MahaDist += result;
-            // // Middle anchor point
-            // newXVector = new Vector4(xVector.x, xVector.y, midPixelX, midPixelY);
-            // x_min_mu = newXVector - kernelList[i].MuX;
-            // tempVector = kernelList[i].CoMatrixInv * x_min_mu;
-            // result = Vector4.Dot(x_min_mu, tempVector);
-            // result = Mathf.Sqrt(result);
-            // kernelList[i].MahaDist += result;
 
             Vector4 newXVector = new Vector4(xVector.x, xVector.y, midPixelX, midPixelY);
             Vector4 x_min_mu = newXVector - kernelList[i].MuX;

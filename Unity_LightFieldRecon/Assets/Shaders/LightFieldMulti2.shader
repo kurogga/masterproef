@@ -1,4 +1,4 @@
-﻿Shader "Unlit/LightFieldMulti"
+﻿Shader "Unlit/LightFieldMulti2"
 {
 	SubShader
 	{
@@ -20,7 +20,10 @@
 			uniform StructuredBuffer<float4> muYnPiList; // color(x,y,z) + pi
 			uniform StructuredBuffer<float4x4> coMatrixInvList; // -1/2 coMatrix^(-1)
 			uniform StructuredBuffer<float> determinantList; // 1/sqrt(determinat(coMatrix))
-			
+            uniform sampler2D middleRowTexture;
+            uniform sampler2D bottomRowTexture;
+            uniform int currentRow;
+
 			uniform int pixelsPerBlock;
 			uniform int kernelsPerBlock;
 			uniform int frameWidth;
@@ -96,125 +99,62 @@
 				float weightSum = 0.0;
                 float weight = 0.0;
 				float3 colorSum = float3(0.0,0.0,0.0);
-
+                float4 texCol = float4(0,0,0,0);
 				// KERNELS SORTED IN 3 ROWS
 				// Left and right block + itself
-				for(int i = begin; i < end; i++)
-				{
-					weight = muYnPiList[i].w*getNormalDist(x, i);
-					weightSum += weight;
-					colorSum += (weight*muYnPiList[i].xyz);
-				}
-
-				if(pixelY > frameHeight/2-50) {
+                if(currentRow == 0)
+                {
+					for(int i = begin; i < end; i++)
+                    {
+                        weight = muYnPiList[i].w*getNormalDist(x, i);
+                        weightSum += weight;
+                        colorSum += (weight*muYnPiList[i].xyz);
+                    }
+                   // Lower 3 blocks
+					for(int i = beginLower; i < endLower; i++)
+					{
+						weight = muYnPiList[i].w*getNormalDist(x, i);
+						weightSum += weight;
+						colorSum += (weight*muYnPiList[i].xyz);
+					}
 					// Upper 3 blocks
-					for(int i = beginUpper; i < endUpper; i+=dynamicKernels)
+					for(int i = beginUpper; i < endUpper; i++)
 					{
 						weight = muYnPiList[i].w*getNormalDist(x, i);
 						weightSum += weight;
 						colorSum += (weight*muYnPiList[i].xyz);
 					}
-
-					// Lower 3 blocks
-					for(int i = beginLower; i < endLower; i+=dynamicKernels)
-					{
-						weight = muYnPiList[i].w*getNormalDist(x, i);
-						weightSum += weight;
-						colorSum += (weight*muYnPiList[i].xyz);
-					}
-				}
-		
-				// TESTING WITH FILTER
-				// for (int i = startBlock*kernelsPerBlock; i < (startBlock*kernelsPerBlock)+kernelsPerBlock; i++)
-				// {
-				// 	weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 	weightSum += weight;
-				// 	// Calculate weight * muY(color)
-				// 	colorSum += (weight*muYnPiList[i].xyz);
-				// }
-
-				// int dynamicRange = kernelsPerBlock/4;
-				// if(blockX != 0)
-				// {	// Kernels of left block
-				// 	for (int i = startBlock*kernelsPerBlock-kernelsPerBlock; i < (startBlock*kernelsPerBlock)-dynamicRange; i++)
+                }
+                // else if(currentRow == 1)
+                // {
+				// 	// Lower 3 blocks
+				// 	for(int i = beginLower; i < endLower; i+=dynamicKernels)
 				// 	{
 				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
 				// 		weightSum += weight;
 				// 		colorSum += (weight*muYnPiList[i].xyz);
 				// 	}
-				// }
-				// if(blockX != amountBlocksInARow)
-				// {	// Kernels of right block
-				// 	for (int i = startBlock*kernelsPerBlock+kernelsPerBlock; i < (startBlock*kernelsPerBlock)+kernelsPerBlock+dynamicRange; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// if(blockY != amountBlocksInAColumn)
-				// {	// Kernels of upper block
-				// 	for (int i = startBlock*kernelsPerBlock+amountBlocksInARow*kernelsPerBlock; i < (startBlock*kernelsPerBlock)+dynamicRange+amountBlocksInARow*kernelsPerBlock; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// if(blockY != 0)
-				// {	// Kernels of lower block
-				// 	for (int i = startBlock*kernelsPerBlock-amountBlocksInARow*kernelsPerBlock; i < (startBlock*kernelsPerBlock)+dynamicRange-amountBlocksInARow*kernelsPerBlock; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// dynamicRange=kernelsPerBlock/2;
-				// if(blockX != 0 && blockY != 0)
-				// {	// Kernels of top left block
-				// 	int middlePos = (startBlock*kernelsPerBlock)-amountBlocksInARow*kernelsPerBlock;
-				// 	for(int i = middlePos-kernelsPerBlock; i < middlePos+dynamicRange; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// if(blockX != 0 && blockY != amountBlocksInAColumn)
-				// {	// Kernels of bottom left block
-				// 	int middlePos = (startBlock*kernelsPerBlock)+amountBlocksInARow*kernelsPerBlock;
-				// 	for(int i = middlePos-kernelsPerBlock; i < middlePos+dynamicRange; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// if(blockX != amountBlocksInARow && blockY != 0)
-				// {	// Kernels of top right block
-				// 	int middlePos = (startBlock*kernelsPerBlock)+kernelsPerBlock-amountBlocksInARow*kernelsPerBlock;
-				// 	for(int i = middlePos; i < middlePos+dynamicRange; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-				// if(blockX != amountBlocksInARow && blockY != amountBlocksInAColumn)
-				// {	// Kernels of bottom right block
-				// 	int middlePos = (startBlock*kernelsPerBlock)+kernelsPerBlock+amountBlocksInARow*kernelsPerBlock;
-				// 	for(int i = middlePos; i < middlePos+dynamicRange; i++)
-				// 	{
-				// 		weight = muYnPiList[i].w*getNormalDist(x, i);
-				// 		weightSum += weight;
-				// 		colorSum += (weight*muYnPiList[i].xyz);
-				// 	}
-				// }
-
+                //     texCol = tex2D(middleRowTexture, v.uv);
+                // }
+                else
+                {
+                    for(int i = begin; i < end; i++)
+                    {
+                        weight = muYnPiList[i].w*getNormalDist(x, i);
+                        weightSum += weight;
+                        colorSum += (weight*muYnPiList[i].xyz);
+                    }
+					v.uv.y = 1-v.uv.y;
+                    texCol = tex2D(middleRowTexture, v.uv);
+					return texCol;
+					texCol *= 0.6;
+					colorSum *= 0.3;
+					weightSum *= 0.6;
+                }
 				// Calculate colorSum/sum of all weights
 				colorSum /= weightSum;
-				float4 result = float4(colorSum, 1.0);
+                colorSum += texCol.xyz;
+                float4 result = float4(colorSum, 1.0);
                 return result;
             }
             ENDCG
