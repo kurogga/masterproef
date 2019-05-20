@@ -52,7 +52,7 @@
 				float4 x_min_mu = x-muXList[k];
 				float4 tempvector = mul(coMatrixInvList[k],x_min_mu);
 				float exponent = dot(tempvector,x_min_mu);
-				float result = exp(-0.5*exponent);
+				float result = exp(min(0.0,-0.5*exponent));
 				result /= determinantList[k];
 				return result;
 			}
@@ -108,7 +108,7 @@
 
 				if(pixelY > frameHeight/2-50) {
 					// Upper 3 blocks
-					for(int i = beginUpper; i < endUpper; i+=dynamicKernels)
+					for(int i = beginUpper; i < endUpper; i+=3)
 					{
 						weight = muYnPiList[i].w*getNormalDist(x, i);
 						weightSum += weight;
@@ -116,7 +116,7 @@
 					}
 
 					// Lower 3 blocks
-					for(int i = beginLower; i < endLower; i+=dynamicKernels)
+					for(int i = beginLower; i < endLower; i+=3)
 					{
 						weight = muYnPiList[i].w*getNormalDist(x, i);
 						weightSum += weight;

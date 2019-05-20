@@ -10,7 +10,7 @@ public class ScreenshotTaker : MonoBehaviour
     public int frameCount;
     public float deltaTime;
     public bool first;
-    public const string DIRECTORY = "flowers_800_0p0k/";
+    public const string DIRECTORY = "bikes_4pmin80k/";
     public string path;
 
     // Start is called before the first frame update
@@ -77,8 +77,8 @@ public class ScreenshotTaker : MonoBehaviour
         //     frameCount++;
         //     first = !first;
         // }
-        // Write to a file in the project folder
 
+        // Write to a file in the project folder
         File.WriteAllBytes(path + frameCount + ".png", bytes);
         UnityEngine.Debug.Log("Saved Screenshot to: " + path);
         frameCount++;

@@ -110,7 +110,7 @@
                         weightSum += weight;
                         colorSum += (weight*muYnPiList[i].xyz);
                     }
-                   // Lower 3 blocks
+                    // // Lower 3 blocks
 					for(int i = beginLower; i < endLower; i++)
 					{
 						weight = muYnPiList[i].w*getNormalDist(x, i);
@@ -146,10 +146,10 @@
                     }
 					v.uv.y = 1-v.uv.y;
                     texCol = tex2D(middleRowTexture, v.uv);
-					return texCol;
-					texCol *= 0.6;
-					colorSum *= 0.3;
-					weightSum *= 0.6;
+					// return texCol;
+					// texCol *= 0.4;
+					colorSum *= 0.001;
+					// weightSum *= 0.6;
                 }
 				// Calculate colorSum/sum of all weights
 				colorSum /= weightSum;

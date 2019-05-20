@@ -274,7 +274,7 @@ public class LightFieldMulti : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+        // deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 #if UNITY_ANDROID
         mousePosition.x += gyro.rotationRate.y*deltaTime*100.0f/5.0f;
         mousePosition.y += gyro.rotationRate.x*deltaTime*100.0f/5.0f;
@@ -299,23 +299,21 @@ public class LightFieldMulti : MonoBehaviour
         mousePosition.y = (Screen.height - Input.mousePosition.y) / Screen.height * 20;
 #endif
 
-        material.SetFloat("mouseX", mousePosition.x);
-        material.SetFloat("mouseY", mousePosition.y);
+        // material.SetFloat("mouseX", mousePosition.x);
+        // material.SetFloat("mouseY", mousePosition.y);
 
-#if UNITY_EDITOR
-            // if (frameCount >= 100)
-            // {
-            //     EditorApplication.isPlaying = false;
-            // }
-            // deltaTime += Time.deltaTime;
-            // if (deltaTime > 1.0f)
-            // {
-                // material.SetFloat("mouseX", mousePositionList[frameCount].x);
-                // material.SetFloat("mouseY", mousePositionList[frameCount].y);
-                // deltaTime = 0.0f;
-                // frameCount++;
-            // }
-#endif
+        // if (frameCount >= 100)
+        // {
+        //     EditorApplication.isPlaying = false;
+        // }
+        // deltaTime += Time.deltaTime;
+        // if (deltaTime > 1.0f)
+        // {
+        //     material.SetFloat("mouseX", mousePositionList[frameCount].x);
+        //     material.SetFloat("mouseY", mousePositionList[frameCount].y);
+        //     deltaTime = 0.0f;
+        //     frameCount++;
+        // }
 
         if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))
         {

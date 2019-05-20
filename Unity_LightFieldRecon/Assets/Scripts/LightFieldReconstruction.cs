@@ -9,26 +9,26 @@ using UnityEditor;
 public class LightFieldReconstruction : MonoBehaviour
 {
     public TextAsset textFile;
-    public Material material;
+    Material material;
     public Vector2 mousePosition;
-    public int kernels;
-    public List<Vector2> mousePositionList;
-    public float deltaTime;
-    public int frameCount;
-    public const int FRAME_WIDTH = 623;
-    public const int FRAME_HEIGHT = 432;
+    int kernels;
+    List<Vector2> mousePositionList;
+    float deltaTime;
+    int frameCount;
+    public int FRAME_WIDTH = 623;
+    public int FRAME_HEIGHT = 432;
 
     // Buffer to store data and pass to shader
-    public ComputeBuffer muXBuffer;
-    public ComputeBuffer muYnPiBuffer;
-    public ComputeBuffer coMatrixInvBuffer;
-    public ComputeBuffer determinantBuffer;
+    ComputeBuffer muXBuffer;
+    ComputeBuffer muYnPiBuffer;
+    ComputeBuffer coMatrixInvBuffer;
+    ComputeBuffer determinantBuffer;
 
     // List to store data from file and pass to buffer
-    public List<Vector4> muXList; //cameraposition en pixelposition
-    public List<Vector4> muYnPiList; // color en pi
-    public List<Matrix4x4> coMatrixInvList; // -1/2 coMatrix^(-1)
-    public List<float> determinantList; // 1/sqrt(determinant(coMatrix))
+    List<Vector4> muXList; //cameraposition en pixelposition
+    List<Vector4> muYnPiList; // color en pi
+    List<Matrix4x4> coMatrixInvList; // -1/2 coMatrix^(-1)
+    List<float> determinantList; // 1/sqrt(determinant(coMatrix))
 
     // Start is called before the first frame update
     void Start()
@@ -125,24 +125,20 @@ public class LightFieldReconstruction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // mousePosition = new Vector2(Input.mousePosition.x/Screen.width*20,Input.mousePosition.y/Screen.height*20);
-        // material.SetFloat("mouseX",mousePosition.x);
-        // material.SetFloat("mouseY",mousePosition.y);
-        if (frameCount >= 100)
-        {
-            EditorApplication.isPlaying = false;
-        }
-        deltaTime += Time.deltaTime;
-        if (deltaTime > 1.0f)
-        {
-            material.SetFloat("mouseX", mousePositionList[frameCount].x);
-            material.SetFloat("mouseY", mousePositionList[frameCount].y);
-            deltaTime = 0.0f;
-            frameCount++;
-        }
-
-        // if(Input.GetKeyDown(KeyCode.Space)){
-
+        mousePosition = new Vector2(Input.mousePosition.x / Screen.width * 20, Input.mousePosition.y / Screen.height * 20);
+        // material.SetFloat("mouseX", mousePosition.x);
+        // material.SetFloat("mouseY", mousePosition.y);
+        // if (frameCount >= 100)
+        // {
+        //     EditorApplication.isPlaying = false;
+        // }
+        // deltaTime += Time.deltaTime;
+        // if (deltaTime > 1.0f)
+        // {
+        //     material.SetFloat("mouseX", mousePositionList[frameCount].x);
+        //     material.SetFloat("mouseY", mousePositionList[frameCount].y);
+        //     deltaTime = 0.0f;
+        //     frameCount++;
         // }
         if (Input.GetKeyDown(KeyCode.Escape))
         {

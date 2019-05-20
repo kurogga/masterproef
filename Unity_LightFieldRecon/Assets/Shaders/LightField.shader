@@ -77,7 +77,6 @@
 				{
 					weight = muYnPiList[i].w*getNormalDist(x, i);
 					weightSum += weight;
-					// Calculate weight * muY(color)
 					colorSum += (weight*muYnPiList[i].xyz);
 				}
 				// Calculate colorSum/sum of all weights

@@ -1,0 +1,75 @@
+{
+  "idims": 4,
+  "odims": 3,
+  "optics": {
+	"sensor_w": 35.0,
+	"sensor_h": 35.0,
+	"focal_length": 50.0
+   },
+  "lowerbounds": [
+    -0.001,
+    -0.001,
+    0.0,
+    0.0
+  ],
+  "upperbounds": [
+    17,
+    17,
+    1024.0,
+    1024.0
+  ],
+  "scales": [
+    1,
+    1,
+    0.05,
+    0.05,
+    100.0,
+    100.0,
+    100.0
+  ],
+  "regularization_prescaled": [
+    0.007,
+    0.007,
+    1.7361111111111114e-05,
+    1.944444444444446e-05,
+    0.004271861249946602,
+    0.004271861249946602,
+    0.004271861249946602
+  ],
+  "regularization": [
+    4.444445073604606e-05,
+    4.444444245762297e-05,
+    0.027777777777777776,
+    0.027777777777777776,
+    4.2718612499466017e-07,
+    4.2718612499466017e-07,
+    4.2718612499466017e-07
+  ],
+  "Kcap": 40000,
+  "K": 12234,
+  "matrix_type": "covariance",
+  "em_epoch": 0,
+  "em_mbs": 1024,
+  "em_kill_gradients": true,
+  "em_epochs_per_split": 12,
+  "em_kernels_to_split": 120,
+  "em_splits_per_kernel": 2,
+  "em_split_axes": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "em_split_color_boost": 1.2,
+  "em_split_Rxx_extra_factor": 1.1,
+  "gd_epoch": 300,
+  "gd_decay_epoch": 300,
+  "gd_learning_rate": 0.002,
+  "gd_learning_rate_decay": 0.001,
+  "gd_mbs": 1024,
+  "gd_split_accum_epochs": 10,
+  "gd_split_after_epochs": 25,
+  "gd_split_kernels": 1000,
+  "gd_gradients": "full",
+  "gradients": "full"
+}
