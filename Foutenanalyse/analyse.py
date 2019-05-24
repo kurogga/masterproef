@@ -12,14 +12,27 @@ import sys
 from skimage import img_as_float
 from skimage.measure import compare_ssim as ssim
 
-def mse(x, y):
+def get_mse(x, y):
+#    return mse(x,y)
     return np.linalg.norm(x - y)
 
 def get_ssim(x, y):
-    return ssim(x, y, data_range=y.max() - y.min(), multichannel=True)
+    luma_x = np.empty((len(x),len(x[0])))
+    luma_y = np.empty((len(y),len(y[0])))
+    for i in range(0,len(x)):
+        for j in range(0,len(x[i])):
+#            luma_x[i][j] = 0.2126*x[i][j][2] + 0.7152*x[i][j][1] + 0.0722*x[i][j][0]
+#            luma_y[i][j] = 0.2126*y[i][j][2] + 0.7152*y[i][j][1] + 0.0722*y[i][j][0]
+            luma_x[i][j] = 0.2989*x[i][j][2] + 0.5870*x[i][j][1] + 0.1140*x[i][j][0]
+            luma_y[i][j] = 0.2989*y[i][j][2] + 0.5870*y[i][j][1] + 0.1140*y[i][j][0]
+    ssim_ = ssim(luma_x, luma_y, data_range=luma_y.max() - luma_y.min())
+#    print(ssim_)
+    return ssim_
 
 def get_psnr(x, y):
-    _mse = mse(x, y)
+#    return psnr(x, y, data_range=y.max() - y.min())
+#    print(x.size)
+    _mse = get_mse(x, y)
     if _mse == 0:
         return 100
     PIXEL_MAX = 255.0
@@ -28,8 +41,10 @@ def get_psnr(x, y):
 def compare_images(x, y, ssim_array, psnr_array):
     original_file = cv2.imread(x)
     img = img_as_float(original_file)
+#    img = cv2.cvtColor(original_file, cv2.COLOR_RGB2HSV)
     changed_file = cv2.imread(y)
     img_noise = img_as_float(changed_file)
+#    img_noise = cv2.cvtColor(changed_file, cv2.COLOR_RGB2HSV)
     ssim_noise = get_ssim(img, img_noise)
     psnr_noise = get_psnr(img, img_noise)
     ssim_array.append(ssim_noise)
@@ -43,6 +58,7 @@ def plot_graph(n, ssim_arrays, psnr_arrays, labels):
     x_max = len(ssim_arrays[0])
     for x in range(0,len(ssim_arrays)):
         ax[0].plot(ssim_arrays[x], label=labels[x])
+        print(labels[x]+"-SSIM: "+str(np.mean(ssim_arrays[x])))
     ax[0].set_ylabel("SSIM [%]")
     ax[0].set_xlabel("frame number")
     ax[0].set_title("Structural similarity")
@@ -53,6 +69,7 @@ def plot_graph(n, ssim_arrays, psnr_arrays, labels):
 
     for x in range(0,len(psnr_arrays)):
         ax[1].plot(psnr_arrays[x], label=labels[x])
+        print(labels[x]+"-PSNR: "+str(np.mean(psnr_arrays[x])))
     ax[1].set_ylabel("PSNR [dB]")
     ax[1].set_xlabel("frame number")
     ax[1].set_title("Peak signal-to-noise ratio")
@@ -62,7 +79,7 @@ def plot_graph(n, ssim_arrays, psnr_arrays, labels):
     
     plt.tight_layout()
     plt.show()
-
+    
 path_original = "original/"
 path_changed = "changed/"
 
@@ -78,7 +95,8 @@ if len(sys.argv) > 2:
     psnr_arrays = []    
     labels = []
     for x in range(2,len(sys.argv)):
-        labels.append(sys.argv[x])
+        templabel = sys.argv[x].split('_',1)
+        labels.append(templabel[1])
         path_changed = sys.argv[x] + "/"
         files2 = next(os.walk(path_changed))[2]
         amount = min(len(files),len(files2))
@@ -95,4 +113,4 @@ if len(sys.argv) > 2:
 else:
     sys.exit("Error: please enter at least 2 folder names containing the images with the original (comparator) folder first!")
 
-
+#compare_colorspaces()
